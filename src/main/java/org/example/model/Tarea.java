@@ -3,7 +3,7 @@ package org.example.model;
 public class Tarea {
     private int id;
     private String descripcion;
-    boolean completada;
+    private boolean completada;
 
     public Tarea(int id, String descripcion) {
         this.id = id;
@@ -28,7 +28,7 @@ public class Tarea {
     }
 
     public void marcarCompletada() {
-        this.completada = true;
+        this.completada = !this.completada;
     }
 
     @Override
