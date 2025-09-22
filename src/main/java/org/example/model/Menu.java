@@ -1,18 +1,17 @@
 package org.example.model;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
     private List<Tarea> tareas;
     private Scanner escaner;
-    private int siguienteId;
 
     public Menu() {
         this.tareas = new ArrayList<>();
         this.escaner = new Scanner(System.in);
-        this.siguienteId = 1;
     }
 
     public void start() {
@@ -33,6 +32,10 @@ public class Menu {
         System.out.println("4️⃣ Listar solo tareas pendientes");
         System.out.println("5️⃣ Eliminar tarea por ID");
         System.out.println("6️⃣ Marcar tarea como completada");
+        System.out.println("7️⃣ Ordenar tareas por fecha de vencimiento de menor a mayor");
+        System.out.println("8️⃣ Ordenar tareas por fecha de vencimiento de mayor a menor");
+        System.out.println("Cargar tareas de archivo");
+        System.out.println("Grabar tareas de archivo");
         System.out.println("0️⃣ Salir");
         System.out.print("Seleccione una opción: ");
     }
@@ -45,10 +48,15 @@ public class Menu {
             case 4 -> listarTareasPendientes();
             case 5 -> eliminarTareaPorId();
             case 6 -> marcarTareaCompletada();
+            case 7 -> ordenarPorFechaDeVencimientoDeMayorAMenor();
+            case 8 -> ordenarPorFechaDeVencimientoDeMenorAMayor();
+            case 9 -> cargarTareasDeArchivo();
+            case 10 -> grabarTareasAArchivo();
             case 0 -> System.out.println("Saliendo...");
             default -> System.out.println("Opción inválida.");
         }
     }
+
     public void agregarTarea() {
         String descripcion;
         do {
@@ -58,8 +66,12 @@ public class Menu {
                 System.out.println("La descripción no puede estar vacía.");
             }
         } while (descripcion.isEmpty());
-        this.tareas.add(new Tarea(siguienteId, descripcion));
-        this.siguienteId++;
+        if (tareas.isEmpty()){
+            this.tareas.add(new Tarea(1, descripcion));
+        }else{
+            int numero = tareas.get(tareas.size()-1).getId() + 1;
+            tareas.add(new Tarea(numero, descripcion));
+        }
         System.out.println("Tarea agregada.");
     }
 
@@ -87,6 +99,7 @@ public class Menu {
         }
 
     }
+
     public void listarTareasPendientes() {
         long cantidadDeTareasPendientes = this.tareas.stream().filter(tarea -> !tarea.isCompletada()).count();
 
@@ -124,14 +137,48 @@ public class Menu {
                 for (Tarea tarea : tareas) {
                     if (tarea.getId() == id) {
                         if (tarea.isCompletada()) {
-                            System.out.print("La tarea ya está completada.");
+                            System.out.println("La tarea ya está completada.");
                         } else{
                             tarea.marcarCompletada();
-                            System.out.print("La tarea se marcó como completada");
+                            System.out.println("La tarea se marcó como completada");
                         }
                     }
                 }
             }
         }
+    }
+
+    public void ordenarPorFechaDeVencimientoDeMenorAMayor(){
+
+        /*Agregar validacion de listado de tareas vacio*/
+        this.tareas.sort(Comparator.comparing(Tarea::getFechaDeVencimiento));
+        System.out.println("Tareas ordenadas por fecha de vencimiento:");
+        tareas.forEach(System.out::println);
+    }
+
+    public void ordenarPorFechaDeVencimientoDeMayorAMenor(){
+
+        /*Agregar validacion de listado de tareas vacio*/
+        this.tareas.sort(Comparator.comparing(Tarea::getFechaDeVencimiento).reversed());
+        System.out.println("Tareas ordenadas por fecha de vencimiento:");
+        tareas.forEach(System.out::println);
+    }
+
+    public void cargarTareasDeArchivo() {
+
+        String archivo = "src/main/resources/tareas.txt";
+        ControladorArchivo controlador = new ControladorArchivo();
+        if (tareas.isEmpty()){
+            this.tareas = controlador.cargarDesdeTxt(archivo, 1);
+
+        }else {
+            this.tareas = controlador.cargarDesdeTxt(archivo,tareas.get(tareas.size()-1).getId() + 1);
+        }
+    }
+
+    public void grabarTareasAArchivo() {
+        String archivo = "src/main/resources/tareas.txt";
+        ControladorArchivo controlador = new ControladorArchivo();
+        controlador.guardarEnTxt(archivo,tareas);
     }
 }
