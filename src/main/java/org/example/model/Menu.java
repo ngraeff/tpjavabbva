@@ -20,9 +20,20 @@ public class Menu {
     public void start() {
         int opcion;
         do {
+            opcion = -1;
             mostrarOpciones();
-            opcion = escaner.nextInt();
-            escaner.nextLine(); // limpiar buffer
+            boolean entradaValida = false;
+            while (!entradaValida) {
+                System.out.print("Ingrese una opción numérica: ");
+                if (escaner.hasNextInt()) {
+                    opcion = escaner.nextInt();
+                    escaner.nextLine();
+                    entradaValida = true;
+                } else {
+                    System.out.println("Error: solo se permiten números.");
+                    escaner.nextLine();
+                }
+            }
             evaluarOpcion(opcion);
         } while (opcion != 0);
     }
