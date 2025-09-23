@@ -42,7 +42,6 @@ public class ControladorArchivo {
                     tarea.marcarCompletada();
                     tareas.add(tarea);
                 }
-
                 siguienteId = Math.max(siguienteId, id + 1);
             }
             System.out.println("Tareas cargadas desde " + archivo);

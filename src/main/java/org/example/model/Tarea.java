@@ -1,10 +1,11 @@
 package org.example.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Tarea {
+public class Tarea implements Serializable {
     private int id;
     private String descripcion;
     private boolean completada;

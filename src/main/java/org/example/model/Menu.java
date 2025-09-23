@@ -34,8 +34,8 @@ public class Menu {
         System.out.println("6️⃣ Marcar tarea como completada");
         System.out.println("7️⃣ Ordenar tareas por fecha de vencimiento de menor a mayor");
         System.out.println("8️⃣ Ordenar tareas por fecha de vencimiento de mayor a menor");
-        System.out.println("Cargar tareas de archivo");
-        System.out.println("Grabar tareas de archivo");
+        System.out.println("9\uFE0F⃣Cargar tareas de archivo");
+        System.out.println("🔟Grabar tareas de archivo");
         System.out.println("0️⃣ Salir");
         System.out.print("Seleccione una opción: ");
     }
@@ -150,18 +150,25 @@ public class Menu {
 
     public void ordenarPorFechaDeVencimientoDeMenorAMayor(){
 
-        /*Agregar validacion de listado de tareas vacio*/
-        this.tareas.sort(Comparator.comparing(Tarea::getFechaDeVencimiento));
-        System.out.println("Tareas ordenadas por fecha de vencimiento:");
-        tareas.forEach(System.out::println);
+        if (tareas.isEmpty()){
+            System.out.println("No hay tareas listadas.");
+        }else{
+            this.tareas.sort(Comparator.comparing(Tarea::getFechaDeVencimiento));
+            System.out.println("Tareas ordenadas por fecha de vencimiento:");
+            tareas.forEach(System.out::println);
+        }
     }
 
     public void ordenarPorFechaDeVencimientoDeMayorAMenor(){
 
-        /*Agregar validacion de listado de tareas vacio*/
-        this.tareas.sort(Comparator.comparing(Tarea::getFechaDeVencimiento).reversed());
-        System.out.println("Tareas ordenadas por fecha de vencimiento:");
-        tareas.forEach(System.out::println);
+        if (tareas.isEmpty()) {
+            System.out.println("No hay tareas listadas.");
+        }
+        else {
+            this.tareas.sort(Comparator.comparing(Tarea::getFechaDeVencimiento).reversed());
+            System.out.println("Tareas ordenadas por fecha de vencimiento:");
+            tareas.forEach(System.out::println);
+        }
     }
 
     public void cargarTareasDeArchivo() {
