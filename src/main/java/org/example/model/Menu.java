@@ -1,9 +1,12 @@
 package org.example.model;
 
+import org.example.excepcion.TareaInexistenteException;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+
 
 public class Menu {
     private List<Tarea> tareas;
@@ -117,10 +120,12 @@ public class Menu {
     public void eliminarTareaPorId() {
         System.out.print("Ingrese el id de la tarea: ");
         int id = escaner.nextInt();
-        if (tareas.removeIf(t -> t.getId() == id)) {
+        try {
+            sacarTarea(id);
             System.out.println("Tarea eliminada.");
-        } else {
-            System.out.println("No existe una tarea con ese ID.");
+
+        }catch (TareaInexistenteException e){
+            System.out.println("ERROR: " + e.getMessage());
         }
     }
 
@@ -187,5 +192,11 @@ public class Menu {
         String archivo = "src/main/resources/tareas.txt";
         ControladorArchivo controlador = new ControladorArchivo();
         controlador.guardarEnTxt(archivo,tareas);
+    }
+
+    private void sacarTarea(int idTarea) throws TareaInexistenteException {
+        if (!tareas.removeIf(t -> t.getId() == idTarea)){
+            throw new TareaInexistenteException("La tarea es inexistente");
+        }
     }
 }
