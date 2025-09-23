@@ -32,7 +32,7 @@ public class ControladorArchivo {
                 boolean completada = partes[2].split(" ")[1].equalsIgnoreCase("COMPLETADA");
 
                 if (!completada){
-                    String texto = "Vence el 25/09/2025 a las 20:26:21";
+                    String texto = partes[3];
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("'Vence el' dd/MM/yyyy 'a las' HH:mm:ss");
                     LocalDateTime fecha = LocalDateTime.parse(texto, formatter);
                     Tarea tarea = new Tarea(id, descripcion, fecha);
