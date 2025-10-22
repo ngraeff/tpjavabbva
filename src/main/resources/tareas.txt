@@ -1,2 +1,1 @@
-Tarea 1,Descripción: Jugar,Tarea pendiente,Vence el 26/09/2025 a las 13:50:40
-Tarea 2,Descripción: Dormir,Tarea pendiente,Vence el 26/09/2025 a las 13:50:44
+Tarea 1,Descripción: Dormir,Tarea pendiente,Vence el 25/10/2025 a las 20:01:15
