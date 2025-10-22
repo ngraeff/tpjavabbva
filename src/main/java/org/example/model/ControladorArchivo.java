@@ -42,7 +42,7 @@ public class ControladorArchivo {
                 String[] partes = linea.split(",");
                 //int id = Integer.parseInt(partes[0].split(" ")[1]);
                 int id = siguienteId;
-                String descripcion = partes[1].split(" ")[1];
+                String descripcion = partes[1].substring("Descripcion: ".length());
                 boolean completada = partes[2].split(" ")[1].equalsIgnoreCase("COMPLETADA");
 
                 if (!completada){
